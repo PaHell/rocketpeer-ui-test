@@ -3,6 +3,5 @@
 </script>
 
 <template>
-	<p>Layout</p>
 	<slot />
 </template>

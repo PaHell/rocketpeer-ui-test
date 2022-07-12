@@ -2,7 +2,6 @@
 </script>
 
 <script>
-	console.log('help me');
 </script>
 
 <template>
@@ -12,4 +11,14 @@
 	<div class="bg-red-500 outline-blue-2">
 		<p>Hello there</p>
 	</div>
+	<button class="btn">Button</button>
+	<button class="btn btn-primary">Button</button>
 </template>
+
+<style lang="postcss" global>
+	body {
+		& > p {
+			@apply bg-green-500;
+		}
+	}
+</style>
