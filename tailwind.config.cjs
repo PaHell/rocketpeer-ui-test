@@ -1,5 +1,5 @@
 module.exports = {
-	plugins: [require("daisyui")],
+	plugins: [require('daisyui')],
 	daisyui: {
 		styled: true,
 		themes: true,
@@ -7,8 +7,8 @@ module.exports = {
 		utils: true,
 		logs: true,
 		rtl: false,
-		prefix: "",
-		darkTheme: "dark",
+		prefix: '',
+		darkTheme: 'dark'
 	},
 	content: [
 		//'./src/lib/**/*.svelte',
@@ -986,5 +986,5 @@ module.exports = {
 		'focus-visible',
 		'active',
 		'disabled'
-	],
+	]
 };

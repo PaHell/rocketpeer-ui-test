@@ -1,5 +1,6 @@
-<script context="module">
+<script context="module" lang="ts">
 	import Navbar from './components/navbar/navbar.svelte';
+	let maurice: never | 'uses' | any | 'typescript';
 </script>
 
 <script>

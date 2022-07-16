@@ -4,8 +4,32 @@
 // for information about these interfaces
 // and what to do when importing types
 declare namespace App {
+	type User = {
+		fname: string;
+		lname: string;
+	};
 	// interface Locals {}
 	// interface Platform {}
 	// interface Session {}
 	// interface Stuff {}
+}
+
+declare module '*.svg' {
+	const content: any;
+	export default content;
+}
+
+declare module '*.svg?component' {
+	const content: any;
+	export default content;
+}
+
+declare module '*.svg?src' {
+	const content: string;
+	export default content;
+}
+
+declare module '*.svg?url' {
+	const content: string;
+	export default content;
 }

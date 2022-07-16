@@ -3,7 +3,6 @@ import sveltePreprocess from 'svelte-preprocess';
 import tailwindCss from 'tailwindcss';
 import postCssNesting from 'postcss-nesting';
 import autoprefixer from 'autoprefixer';
-
 const production = process.env.NODE_ENV !== 'debug';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -18,7 +17,7 @@ const config = {
 	}),
 
 	kit: {
-		adapter: adapter(),
+		adapter: adapter()
 	}
 };
 
