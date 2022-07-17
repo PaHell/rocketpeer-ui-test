@@ -5,8 +5,7 @@
 // and what to do when importing types
 declare namespace App {
 	type User = {
-		fname: string;
-		lname: string;
+		alias: string;
 	};
 	// interface Locals {}
 	// interface Platform {}

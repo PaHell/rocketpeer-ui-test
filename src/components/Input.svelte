@@ -9,6 +9,12 @@
 	export let labelPosition: 0|1|2|3 = 0;
 	export let focusOnMount = false;
 	export let color : 'primary' | 'secondary' | 'accent'| 'ghost' | 'info' | 'success' | 'warning' | 'error' | '' = '';
+	/*
+		input
+		input-primary
+		input-secondary
+		input-accent
+	*/
 	export let size : 'xs' | 'sm'| 'md' | 'lg' | '' = '';
 	export let disabled = false;
 	export let bordered = false;

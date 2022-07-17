@@ -1,16 +1,22 @@
 <script lang="ts" context="module">
 	import Icon from "@src/components/Icon.svelte";
 	import type Icons from "@src/icons";
-import { onMount } from "svelte";
+	import { onMount } from "svelte";
 </script>
 
 <script lang="ts">
 	export let icon : Icons | undefined = undefined;
 	export let text : string | undefined = undefined;
 	export let color : 'primary' | 'secondary' | 'accent'| 'ghost' | 'link' | 'info' | 'success' | 'warning' | 'error' | '' = '';
-	export let size : 'xs' | 'sm'| 'lg' | '' = '';
-	export let form : 'circle' | 'square'| '' = '';
-	export let width : 'wide' | 'block'| '' = '';
+	/*
+		btn
+		btn-primary
+		btn-secondary
+		btn-accent
+	*/
+	export let size : 'xs' | 'sm'| 'lg' | undefined = undefined;
+	export let form : 'circle' | 'square'| undefined = undefined;
+	export let width : 'wide' | 'block'| undefined = undefined;
 	export let active = false;
 	export let disabled = false;
 	export let outlined = false;
