@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
 	import Navbar from './components/navbar/navbar.svelte';
-	let maurice: never | 'uses' | any | 'typescript';
+	// a wise man once said:
+	let maurice: never | 'use' | any = 'you have to';
 </script>
 
 <script>
@@ -15,9 +16,4 @@
 </template>
 
 <style lang="postcss" global>
-	body {
-		& > p {
-			@apply bg-green-500;
-		}
-	}
 </style>

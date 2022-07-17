@@ -6,31 +6,44 @@
 	export let placeholder: string;
 	export let value: string;
 	export let label: string | undefined = undefined;
-	export let focusOnMount: boolean = false;
+	export let labelPosition: 0|1|2|3 = 0;
+	export let focusOnMount = false;
+	export let color : 'primary' | 'secondary' | 'accent'| 'ghost' | 'info' | 'success' | 'warning' | 'error' | '' = '';
+	export let size : 'xs' | 'sm'| 'md' | 'lg' | '' = '';
+	export let disabled = false;
+	export let bordered = false;
 
 	let ref: HTMLInputElement | undefined;
 
 	onMount(() => {
-		if (!!ref && focusOnMount) setTimeout(() => ref?.focus(), 0);
+		if (focusOnMount) focus();
 	});
+
+	export function focus() {
+		ref?.focus();
+	}
 </script>
 
 <template>
-	<div class="form-control w-full max-w-xs">
-		<label class="label">
-			<span class="label-text">{label}</span>
-			<span class="label-text-alt">Alt label</span>
+	<div class="form-control w-full">
+		<label class="label" for={label ?? placeholder}>
+			<span class="label-text">{labelPosition == 0 ? label : ''}</span>
+			<span class="label-text-alt">{labelPosition == 1 ? label : ''}</span>
 		</label>
 		<input
+			id={label ?? placeholder}
+			name={label ?? placeholder}
 			bind:this={ref}
 			bind:value
 			type="text"
 			{placeholder}
-			class="input input-bordered w-full max-w-xs"
+			{disabled}
+			class="input input-{color} input-{size} w-full"
+			class:input-bordered={bordered}
 		/>
-		<label class="label">
-			<span class="label-text-alt">Alt label</span>
-			<span class="label-text-alt">Alt label</span>
+		<label class="label" for={label ?? placeholder}>
+			<span class="label-text-alt">{labelPosition == 2 ? label : ''}</span>
+			<span class="label-text-alt">{labelPosition == 3 ? label : ''}</span>
 		</label>
 	</div>
 </template>

@@ -7,3 +7,14 @@
 	<Header />
 	<slot />
 </template>
+
+<style global lang="postcss">
+	html,
+	body {
+		@apply w-screen min-h-screen;
+	}
+
+	body {
+		@apply flex flex-col;
+	}
+</style>
