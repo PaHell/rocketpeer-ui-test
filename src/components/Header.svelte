@@ -3,6 +3,7 @@
 	import { user } from '@src/store';
 	import Icon from '@src/components/Icon.svelte';
 	import Icons from '@src/icons';
+	import NotificationCenter from '@src/components/NotificationCentre.svelte';
 </script>
 
 <script lang="ts">
@@ -21,7 +22,7 @@
 	<div class="navbar bg-base-100">
 		<div class="flex-none">
 			<button class="btn btn-square btn-ghost">
-				<Icon name={Icons.HOME} />
+				<Icon name={Icons.HOME} /> 
 			</button>
 		</div>
 		<div class="flex-1">
@@ -75,6 +76,9 @@
 					<li><a>Legal</a></li>
 					<li><a>Privacy Policy</a></li>
 				</ul>
+			</div>
+			<div class="flex-1 mr-4">
+				<NotificationCenter />
 			</div>
 		</div>
 	</div>
