@@ -9,9 +9,9 @@
 
 <script lang="ts">
 	let navItems: [label: string, route: string][] = [
-		['Home', '/home'],
+		['Home', '/home/home'],
 		['Find', '/find/find'],
-		['Create', '/create']
+		['Create', '/create/create']
 	];
 	let authItems: [label: string, route: string][] = [
 		['Login', '/auth/login'],
