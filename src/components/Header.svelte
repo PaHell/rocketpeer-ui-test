@@ -77,9 +77,10 @@
 					<li><a>Privacy Policy</a></li>
 				</ul>
 			</div>
-			<div class="flex-1 mr-4">
-				<NotificationCenter />
-			</div>
+			
+		</div>
+		<div class=" mr-8">
+			<NotificationCenter />
 		</div>
 	</div>
 </template>
