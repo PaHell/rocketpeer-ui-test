@@ -10,7 +10,7 @@
 <script lang="ts">
 	let navItems: [label: string, route: string][] = [
 		['Home', '/home'],
-		['Find', '/find'],
+		['Find', '/find/find'],
 		['Create', '/create']
 	];
 	let authItems: [label: string, route: string][] = [
