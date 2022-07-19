@@ -22,7 +22,7 @@
 	<div class="navbar bg-base-100">
 		<div class="flex-none">
 			<button class="btn btn-square btn-ghost">
-				<Icon name={Icons.HOME} /> 
+				<Icon name={Icons.HOME} />
 			</button>
 		</div>
 		<div class="flex-1">
@@ -77,10 +77,11 @@
 					<li><a>Privacy Policy</a></li>
 				</ul>
 			</div>
-			
 		</div>
-		<div class=" mr-8">
-			<NotificationCenter />
+		<div>
+			<div class=" mr-8">
+				<NotificationCenter />
+			</div>
 		</div>
 	</div>
 </template>
