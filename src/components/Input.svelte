@@ -32,25 +32,29 @@
 
 <template>
 	<div class="form-control w-full">
+		{#if label}
 		<label class="label" for={label ?? placeholder}>
 			<span class="label-text">{labelPosition == 0 ? label : ''}</span>
 			<span class="label-text-alt">{labelPosition == 1 ? label : ''}</span>
 		</label>
+		{/if}
 		<input
-			id={label ?? placeholder}
-			name={label ?? placeholder}
-			bind:this={ref}
-			bind:value
-			type="text"
-			{placeholder}
-			{disabled}
-			class="input input-{color} input-{size} w-full"
-			class:input-bordered={bordered}
+		id={label ?? placeholder}
+		name={label ?? placeholder}
+		bind:this={ref}
+		bind:value
+		type="text"
+		{placeholder}
+		{disabled}
+		class="input input-{color} input-{size} w-full"
+		class:input-bordered={bordered}
 		/>
+		{#if label}
 		<label class="label" for={label ?? placeholder}>
 			<span class="label-text-alt">{labelPosition == 2 ? label : ''}</span>
 			<span class="label-text-alt">{labelPosition == 3 ? label : ''}</span>
 		</label>
+		{/if}
 	</div>
 </template>
 

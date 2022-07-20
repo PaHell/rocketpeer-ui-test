@@ -1,10 +1,10 @@
 <script context="module" lang="ts">
-	import Navbar from './components/navbar/navbar.svelte';
+	import Navbar from './navbar.svelte';
 	// a wise man once said:
 	let maurice: never | 'use' | any = 'you have to';
 </script>
 
-<script>
+<script lang="ts">
 </script>
 
 <template>

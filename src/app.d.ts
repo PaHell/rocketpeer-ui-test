@@ -5,8 +5,15 @@
 // and what to do when importing types
 declare namespace App {
 	type User = {
-		alias: string;
-	};
+		id: string;
+		img?: string | undefined;
+		name: string;
+	}
+	type Message = {
+		content: string;
+		user_id: string;
+		_user?: App.User;
+	}
 	// interface Locals {}
 	// interface Platform {}
 	// interface Session {}

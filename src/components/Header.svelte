@@ -15,6 +15,9 @@
 		['Login', '/auth/login'],
 		['Register', '/auth/register']
 	];
+	let _user : App.User | undefined;
+	_user = $user;
+	user.subscribe(v => _user = v);
 </script>
 
 <template>
@@ -30,7 +33,7 @@
 			{/each}
 		</div>
 		<div class="flex-none gap-2">
-			{#if !!$user}
+			{#if !!_user}
 				<div class="form-control">
 					<input type="text" placeholder="Search" class="input input-bordered" />
 				</div>
@@ -46,7 +49,7 @@
 					>
 						<li>
 							<a class="justify-between">
-								Profile
+								{_user.alias}
 								<span class="badge">New</span>
 							</a>
 						</li>
