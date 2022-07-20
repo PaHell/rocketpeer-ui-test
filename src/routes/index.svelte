@@ -9,7 +9,7 @@
 
 <template>
 	<div>
-		<div class="flex">
+		<div class="flex w-screen">
 			<Navbar />
 		</div>
 	</div>

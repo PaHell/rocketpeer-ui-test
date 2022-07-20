@@ -68,9 +68,7 @@
 			on:click|preventDefault={() => (show = false)}
 		/>
 
-		<div
-			class="absolute right-4 p-3 mt-1 text-gray-600 bg-white bg-gray-100 rounded shadow-md messages"
-		>
+		<div class="absolute right-4 p-3 mt-1 text-gray-600 bg-gray-100 rounded shadow-md messages">
 			<ul class="space-y-3">
 				{#each $center as message}
 					<li class="p-3 border rounded flex">
