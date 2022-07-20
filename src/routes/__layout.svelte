@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
 	import '../style/app.css';
 	import Header from '@src/components/Header.svelte';
+	import Navbar from '@src/components/navbar.svelte';
 </script>
 
 <template>

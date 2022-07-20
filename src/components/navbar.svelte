@@ -2,7 +2,7 @@
 </script>
 
 <template>
-	<div class="flex">
+	<div class="">
 		<div class="bg-gray-900 w-16 flex-none flex flex-col min-h-screen h-screen px-2 py-2">
 			<div class="overflow-y-auto">
 				<ul class="text-center mx-auto">
