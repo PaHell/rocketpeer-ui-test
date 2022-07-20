@@ -8,12 +8,12 @@ declare namespace App {
 		id: string;
 		img?: string | undefined;
 		name: string;
-	}
+	};
 	type Message = {
 		content: string;
 		user_id: string;
 		_user?: App.User;
-	}
+	};
 	// interface Locals {}
 	// interface Platform {}
 	// interface Session {}

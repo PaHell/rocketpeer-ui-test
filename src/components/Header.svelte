@@ -17,9 +17,9 @@
 		['Login', '/auth/login'],
 		['Register', '/auth/register']
 	];
-	let _user : App.User | undefined;
+	let _user: App.User | undefined;
 	_user = $user;
-	user.subscribe(v => _user = v);
+	user.subscribe((v) => (_user = v));
 </script>
 
 <template>

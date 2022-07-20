@@ -1,6 +1,6 @@
 <script context="module">
-	import Icon from "./Icon.svelte";
-	import Icons from "@src/icons";
+	import Icon from './Icon.svelte';
+	import Icons from '@src/icons';
 </script>
 
 <script lang="ts">
@@ -8,13 +8,13 @@
 	export let square = false;
 	export let padded = true;
 
-	function getInitials() : string {
-		if (!user?.name) return "X";
-		const split = user?.name.split(" ");
+	function getInitials(): string {
+		if (!user?.name) return 'X';
+		const split = user?.name.split(' ');
 		let initials = split[0][0].toUpperCase();
 		if (split.length > 1) initials += split[1][0].toUpperCase();
 		else if (split[0].length > 1) initials += split[0][1].toLowerCase();
-		return initials ?? "@@";
+		return initials ?? '@@';
 	}
 </script>
 
@@ -22,9 +22,9 @@
 	<div class="user-image" class:square class:padded>
 		<div>
 			{#if !user}
-				<Icon name={Icons.HOME}/>
+				<Icon name={Icons.HOME} />
 			{:else if user.img}
-				<img src="{user.img}" alt=""/>
+				<img src={user.img} alt="" />
 			{:else}
 				<p>{getInitials()}</p>
 			{/if}
@@ -49,7 +49,7 @@
 				text-base whitespace-nowrap
 				pb-[1.25px]
 				leading-none;
-				
+
 				&:first-letter {
 					@apply text-white text-opacity-100;
 				}

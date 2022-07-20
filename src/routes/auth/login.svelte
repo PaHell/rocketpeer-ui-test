@@ -5,7 +5,6 @@
 	import Icons from '@src/icons';
 	//import GUN from 'gun';
 	import Weapons from '@src/usa';
-
 </script>
 
 <script>
