@@ -1,8 +1,10 @@
 <script context="module">
 	import { goto } from '$app/navigation';
 	import { user } from '@src/store';
+	import ProfilePicture from '@src/icons/account_circle.svg';
 	import Icon from '@src/components/Icon.svelte';
 	import Icons from '@src/icons';
+	import NotificationCenter from '@src/components/NotificationCentre.svelte';
 </script>
 
 <script lang="ts">
@@ -40,7 +42,7 @@
 				<div class="dropdown dropdown-end">
 					<label tabindex="0" class="btn btn-ghost btn-circle avatar">
 						<div class="w-10 rounded-full">
-							<img src="https://placeimg.com/80/80/people" />
+							<img src={ProfilePicture} />
 						</div>
 					</label>
 					<ul
@@ -78,6 +80,11 @@
 					<li><a>Legal</a></li>
 					<li><a>Privacy Policy</a></li>
 				</ul>
+			</div>
+		</div>
+		<div>
+			<div class=" mr-8 mt-1">
+				<NotificationCenter />
 			</div>
 		</div>
 	</div>

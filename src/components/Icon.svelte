@@ -15,4 +15,5 @@
 	.icon {
 		@apply text-[24px];
 	}
+
 </style>
