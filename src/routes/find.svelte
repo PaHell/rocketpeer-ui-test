@@ -21,7 +21,7 @@
 							on:click={searchLobby}
 							icon={Icons.CONTINUE}
 							text="Search"
-							color="primary"
+							color="accent"
 							reverse
 						/>
 					</div>

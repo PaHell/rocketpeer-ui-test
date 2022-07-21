@@ -40,7 +40,7 @@
 		bind:value={password}
 	/>
 	<div class="flex justify-end space-x-6">
-		<Button on:click={login} icon={Icons.CONTINUE} text="Login" color="primary" reverse />
+		<Button on:click={login} icon={Icons.CONTINUE} text="Login" color="accent" reverse />
 		<Button on:click={register} icon={Icons.CONTINUE} text="Register" color="secondary" reverse />
 	</div>
 </template>

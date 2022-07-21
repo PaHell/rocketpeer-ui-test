@@ -14,6 +14,18 @@ declare namespace App {
 		user_id: string;
 		_user?: App.User;
 	};
+	type Server = {
+		id: string;
+		name: string;
+		img?: string | undefined;
+	};
+	namespace UI {
+		type NavBarItem = {
+			icon: string;
+			url?: string | undefined;
+			func?: () => void;
+		};
+	}
 	// interface Locals {}
 	// interface Platform {}
 	// interface Session {}

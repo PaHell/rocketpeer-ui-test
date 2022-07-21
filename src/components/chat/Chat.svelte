@@ -34,7 +34,7 @@
 		<footer>
 			<Input
 				placeholder="Type a message..."
-				color="primary"
+				color="accent"
 				bind:value={input}
 				bordered
 				focusOnMount
@@ -43,7 +43,7 @@
 				on:click={send}
 				icon={Icons.CONTINUE}
 				text="Send"
-				color="primary"
+				color="accent"
 				disabled={!input}
 				reverse
 			/>

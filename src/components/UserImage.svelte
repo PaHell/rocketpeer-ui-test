@@ -22,7 +22,7 @@
 	<div class="user-image" class:square class:padded>
 		<div>
 			{#if !user}
-				<Icon name={Icons.HOME} />
+				<Icon name={Icons.USER} />
 			{:else if user.img}
 				<img src={user.img} alt="" />
 			{:else}
