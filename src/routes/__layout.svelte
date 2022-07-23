@@ -6,16 +6,18 @@
 	import type { LoadOutput, LoadInput } from '@sveltejs/kit';
 	import Icons from '@src/icons';
 	import Icon from '@src/components/Icon.svelte';
-	import {servers} from '@src/store';
+	import { servers } from '@src/store';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import Button from '@src/components/Button.svelte';
-	
+	import NotificationCentre from '@src/components/NotificationCentre.svelte';
+	import { notifCenter } from '@src/NotificationStore';
+
 	const unauthed: string[] = ['/auth/login', '/auth/register'];
 	const redirectUnauthorized = unauthed[0];
 	const redirectAuthorized = '/home';
 
-	export async function load({session, url}): Promise<LoadOutput> {
+	export async function load({ session, url }): Promise<LoadOutput> {
 		return { props: {} };
 		const requiresAuth = !unauthed.find((r) => r === url.pathname);
 		let loggedIn = Object.keys(session).length > 0;
@@ -31,36 +33,43 @@
 </script>
 
 <script lang="ts">
-	let items : App.UI.NavBarItem[] = [];
-	let lastPath : string | undefined;
-	const buttons : {[name: string]: App.UI.NavBarItem} = {
+	let items: App.UI.NavBarItem[] = [];
+	let lastPath: string | undefined;
+	const buttons: { [name: string]: App.UI.NavBarItem } = {
 		home: {
 			icon: Icons.HOME,
-			name: "Home",
-			path: "/friends/online",
+			name: 'Home',
+			path: '/friends/online'
 		},
 		settings: {
 			icon: Icons.SETTINGS,
-			name: "Settings",
-			path: "/settings",
-			css: 'ml-auto',
+			name: 'Settings',
+			path: '/settings',
+			css: 'ml-auto'
 		},
 		notifications: {
 			icon: Icons.NOTIFICATION,
-			name: "Notifications",
-			onClick: () => console.log('toggle nc'),
-		},
+			name: 'Notifications',
+			onClick: () => (show = !show)
+		}
 	};
-	let active : number = -1;
+	let active: number = -1;
 
-	servers.subscribe(val => {
+	servers.subscribe((val) => {
 		updateServers(val);
 	});
 
 	onMount(() => {
 		updateServers($servers);
+		notifCenter.init([
+			'Maurice is playing a game',
+			'Maurice is listening to spotify',
+			'Maurice is watching a movie',
+			'Maurice is watching a show',
+			'Maurice is watching a game'
+		]);
 	});
-	
+
 	function updateServers(servers: App.Server[]) {
 		items = [
 			buttons.home,
@@ -69,7 +78,7 @@
 					img: curr.img,
 					icon: Icons.SERVER,
 					name: curr.name,
-					path: "/server/" + curr.id,
+					path: '/server/' + curr.id
 				});
 				return acc;
 			}, []),
@@ -78,26 +87,26 @@
 		];
 	}
 
-	function onClick(event: CustomEvent<{from: App.UI.NavBarItem | undefined, to: App.UI.NavBarItem}>) : void {
-		const {from, to} = event.detail;
+	function onClick(
+		event: CustomEvent<{ from: App.UI.NavBarItem | undefined; to: App.UI.NavBarItem }>
+	): void {
+		const { from, to } = event.detail;
 		// make each item go back in history if clicked again
-		if (
-			lastPath
-			&& from?.path === to?.path
-			&& lastPath !== to?.path) {
+		if (lastPath && from?.path === to?.path && lastPath !== to?.path) {
 			goto(lastPath);
 		}
 		if (event.detail.from) lastPath = event.detail.from.path;
 	}
+
+	let show: boolean = false;
 </script>
 
 <template>
-	<Tooltip/>
-	<NavBar
-		{items}
-		bind:active
-		css="w-full"
-		on:click={onClick}/>
+	<Tooltip />
+	<NavBar {items} bind:active css="w-full" on:click={onClick} />
+	{#if show && $notifCenter.length}
+		<NotificationCentre center={notifCenter} />
+	{/if}
 	<slot />
 </template>
 
@@ -112,7 +121,5 @@
 	}
 
 	header {
-
 	}
-
 </style>

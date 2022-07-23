@@ -19,6 +19,6 @@ const createStore = () => {
 	};
 };
 
-const center = createStore();
+const notifCenter = createStore();
 
-export { center };
+export { notifCenter };
