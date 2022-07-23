@@ -6,7 +6,7 @@
 	import { add_classes } from 'svelte/internal';
 	let serverName: string = '';
 	const placeholder = () => {};
-	const userName: string = `${$user.alias}'s server`;
+	const userName: string = `${$user?.alias}'s server`;
 
 	let avatar, fileInput;
 	const onFileSelected = (e) => {

@@ -1,25 +1,29 @@
 <script context="module" lang="ts">
 	import '../style/app.css';
-	import Dock from '@src/components/Dock.svelte';
-	import ServerImage from '@src/components/ServerImage.svelte';
+	import NavBar from '@src/components/NavBar.svelte';
+	import Tooltip from '@src/components/Tooltip.svelte';
+	import Image from '@src/components/Image.svelte';
 	import type { LoadOutput, LoadInput } from '@sveltejs/kit';
+	import Icons from '@src/icons';
+	import Icon from '@src/components/Icon.svelte';
+	import {servers} from '@src/store';
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-import Icons from '@src/icons';
-import Icon from '@src/components/Icon.svelte';
-import { onMount } from 'svelte';
+	import Button from '@src/components/Button.svelte';
+	
 	const unauthed: string[] = ['/auth/login', '/auth/register'];
 	const redirectUnauthorized = unauthed[0];
 	const redirectAuthorized = '/home';
 
-	export async function load(context: LoadInput): Promise<LoadOutput> {
+	export async function load({session, url}): Promise<LoadOutput> {
 		return { props: {} };
-		const requiresAuth = !unauthed.find((r) => r === context.url.pathname);
-		let loggedIn = Object.keys(context.session).length > 0;
-		let path = context.url.pathname;
+		const requiresAuth = !unauthed.find((r) => r === url.pathname);
+		let loggedIn = Object.keys(session).length > 0;
+		let path = url.pathname;
 		console.log({ path, requiresAuth, loggedIn });
 		if (!requiresAuth && loggedIn) path = redirectAuthorized;
 		else if (requiresAuth && !loggedIn) path = redirectUnauthorized;
-		if (path !== context.url.pathname) {
+		if (path !== url.pathname) {
 			return { redirect: path, status: 302 };
 		}
 		return { props: {} };
@@ -27,76 +31,73 @@ import { onMount } from 'svelte';
 </script>
 
 <script lang="ts">
-	const servers : App.Server[] = [
-		{
-			id: "hellebrand2021",
-			name: "Hause Hellebrand",
-			img: "",
-		},
-		{
-			id: "amitdoener",
-			name: "Amit's Dönerbude",
-			img: "",
-		},
-		{
-			id: "fi2021",
-			name: "Fi2021",
-			img: "",
-		},
-	];
-	const left : App.UI.NavBarItem[] = [
-		{
+	let items : App.UI.NavBarItem[] = [];
+	let lastPath : string | undefined;
+	const buttons : {[name: string]: App.UI.NavBarItem} = {
+		home: {
 			icon: Icons.HOME,
-			url: '/home',
-		}
-	];
-	const right : App.UI.NavBarItem[] = [
-		{
+			name: "Home",
+			path: "/friends/online",
+		},
+		settings: {
 			icon: Icons.SETTINGS,
-			url: '/settings',
+			name: "Settings",
+			path: "/settings",
+			css: 'ml-auto',
 		},
-		{
+		notifications: {
 			icon: Icons.NOTIFICATION,
-			func: () => console.log('toggle nc'),
+			name: "Notifications",
+			onClick: () => console.log('toggle nc'),
 		},
-	];
-	let active : App.Server | App.UI.NavBarItem | undefined | null = null;
+	};
+	let active : number = -1;
 
-	onMount(() => {
-		const split = window.location.pathname.split("/");
-		const relative = '/' + split[split.length - 1];
-		if (split[split.length - 2] === "server") {
-			active = servers.find((s) => s.id === split[split.length - 1]);
-		} else {
-			active = left.find((s) => s.url === relative);
-			if (active) return;
-			active = right.find((s) => s.url === relative);
-		}
+	servers.subscribe(val => {
+		updateServers(val);
 	});
 
-	function navigate(event: CustomEvent<App.Server | App.UI.NavBarItem>) {
-		const isServer = event.detail?.id != undefined;
-		if (isServer) goto(`/server/${event.detail.id}`);
-		else if (event.detail?.url) goto(event.detail.url);
-		else if (event.detail?.func) event.detail.func();
+	onMount(() => {
+		updateServers($servers);
+	});
+	
+	function updateServers(servers: App.Server[]) {
+		items = [
+			buttons.home,
+			...servers.reduce<App.UI.NavBarItem[]>((acc, curr) => {
+				acc.push({
+					img: curr.img,
+					icon: Icons.SERVER,
+					name: curr.name,
+					path: "/server/" + curr.id,
+				});
+				return acc;
+			}, []),
+			buttons.settings,
+			buttons.notifications
+		];
+	}
+
+	function onClick(event: CustomEvent<{from: App.UI.NavBarItem | undefined, to: App.UI.NavBarItem}>) : void {
+		const {from, to} = event.detail;
+		// make each item go back in history if clicked again
+		if (
+			lastPath
+			&& from?.path === to?.path
+			&& lastPath !== to?.path) {
+			goto(lastPath);
+		}
+		if (event.detail.from) lastPath = event.detail.from.path;
 	}
 </script>
 
 <template>
-	<div class="flex w-full">
-		<Dock items={left} bind:active on:click={navigate} let:item>
-			<Icon name={item.icon} css="!text-white"/>
-		</Dock>
-		<Dock css="flex-1" items={servers} bind:active on:click={navigate} let:item>
-			<div class="dock-server">
-				<ServerImage server={item}/>
-				<p>{item.name}</p>
-			</div>
-		</Dock>
-		<Dock items={right} bind:active on:click={navigate} let:item>
-			<Icon name={item.icon}/>
-		</Dock>
-	</div>
+	<Tooltip/>
+	<NavBar
+		{items}
+		bind:active
+		css="w-full"
+		on:click={onClick}/>
 	<slot />
 </template>
 
@@ -114,10 +115,4 @@ import { onMount } from 'svelte';
 
 	}
 
-	.dock-server {
-		@apply flex flex-col items-center;
-		& > p {
-			@apply hidden;
-		}
-	}
 </style>

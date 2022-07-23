@@ -21,9 +21,12 @@ declare namespace App {
 	};
 	namespace UI {
 		type NavBarItem = {
-			icon: string;
-			url?: string | undefined;
-			func?: () => void;
+			icon?: Icons;
+			img?: string;
+			name: string;
+			path?: string | undefined;
+			css?: string | undefined;
+			onClick?: () => void;
 		};
 	}
 	// interface Locals {}
