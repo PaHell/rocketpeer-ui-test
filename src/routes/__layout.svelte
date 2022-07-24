@@ -1,15 +1,15 @@
 <script context="module" lang="ts">
 	import '../style/app.css';
-	import NavBar from '@src/components/NavBar.svelte';
 	import Tooltip from '@src/components/Tooltip.svelte';
+	import Navigation from "@src/components/Navigation.svelte";
 	import Image from '@src/components/Image.svelte';
-	import type { LoadOutput, LoadInput } from '@sveltejs/kit';
+	import type { LoadOutput } from '@sveltejs/kit';
 	import Icons from '@src/icons';
 	import Icon from '@src/components/Icon.svelte';
 	import {servers} from '@src/store';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import Button from '@src/components/Button.svelte';
+import { detach } from 'svelte/internal';
 	
 	const unauthed: string[] = ['/auth/login', '/auth/register'];
 	const redirectUnauthorized = unauthed[0];
@@ -31,23 +31,24 @@
 </script>
 
 <script lang="ts">
-	let items : App.UI.NavBarItem[] = [];
+
+	let items : App.UI.MainNavItem[] = [];
 	let lastPath : string | undefined;
-	const buttons : {[name: string]: App.UI.NavBarItem} = {
+	const buttons : {[name: string]: App.UI.MainNavItem} = {
 		home: {
 			icon: Icons.HOME,
-			name: "Home",
-			path: "/friends/online",
+			text: "Home",
+			path: "/messages/friends/online",
 		},
 		settings: {
 			icon: Icons.SETTINGS,
-			name: "Settings",
+			text: "Settings",
 			path: "/settings",
-			css: 'ml-auto',
+			css: 'mt-auto',
 		},
 		notifications: {
 			icon: Icons.NOTIFICATION,
-			name: "Notifications",
+			text: "Notifications",
 			onClick: () => console.log('toggle nc'),
 		},
 	};
@@ -64,11 +65,11 @@
 	function updateServers(servers: App.Server[]) {
 		items = [
 			buttons.home,
-			...servers.reduce<App.UI.NavBarItem[]>((acc, curr) => {
+			...servers.reduce<App.UI.MainNavItem[]>((acc, curr) => {
 				acc.push({
 					img: curr.img,
 					icon: Icons.SERVER,
-					name: curr.name,
+					text: curr.name,
 					path: "/server/" + curr.id,
 				});
 				return acc;
@@ -78,8 +79,7 @@
 		];
 	}
 
-	function onClick(event: CustomEvent<{from: App.UI.NavBarItem | undefined, to: App.UI.NavBarItem}>) : void {
-		const {from, to} = event.detail;
+	function onClick(from: App.UI.MainNavItem, to: App.UI.MainNavItem) : void {
 		// make each item go back in history if clicked again
 		if (
 			lastPath
@@ -87,18 +87,32 @@
 			&& lastPath !== to?.path) {
 			goto(lastPath);
 		}
-		if (event.detail.from) lastPath = event.detail.from.path;
+		if (from) lastPath = from.path;
 	}
 </script>
 
 <template>
 	<Tooltip/>
-	<NavBar
-		{items}
-		bind:active
-		css="w-full"
-		on:click={onClick}/>
-	<slot />
+	<nav>
+		<Navigation
+			{items}
+			bind:active
+			pathSelector={(item) => item.path ?? ""}
+			on:click={(e) => onClick(e.detail.from, e.detail.to)}
+			let:item
+			let:index>
+			<div data-tooltip={item.text}>
+				{#if item.img}
+					<Image src={item.img} alt={item.text}/>
+				{:else if item.icon}
+					<Icon name={item.icon}/>
+				{/if}
+			</div>
+		</Navigation>
+	</nav>
+	<main>
+		<slot />
+	</main>
 </template>
 
 <style global lang="postcss">
@@ -108,11 +122,37 @@
 	}
 
 	body {
-		@apply flex flex-col;
+		@apply flex;
+		& > nav {
+			@apply flex flex-col bg-gray-900;
+			& > button {
+                @apply flex justify-center items-center
+                p-2 transition-colors;
+                & > div {
+                    @apply overflow-hidden
+                    flex items-center
+                    bg-gray-800 rounded-full
+                    text-accent
+                    transition-all ease-linear;
+                    & > .icon {
+                        @apply w-12 h-12
+                        leading-[3rem];
+                    }
+                }
+                &:hover,
+                &:active,
+                &.active {
+                    & > div {
+                        @apply bg-accent rounded-xl text-white;
+                    }
+                }
+    
+            }
+		}
+		& > main {
+			@apply flex-1 h-full;
+		}
 	}
 
-	header {
-
-	}
 
 </style>

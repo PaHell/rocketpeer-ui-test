@@ -17,15 +17,20 @@ declare namespace App {
 	type Server = {
 		id: string;
 		name: string;
-		img?: string | undefined;
+		img?: string;
 	};
 	namespace UI {
 		type NavBarItem = {
 			icon?: Icons;
+			text: string;
+			path: string;
+		};
+		type MainNavItem = {
+			icon?: Icons;
 			img?: string;
-			name: string;
-			path?: string | undefined;
-			css?: string | undefined;
+			text: string;
+			path?: string;
+			css?: string;
 			onClick?: () => void;
 		};
 	}
