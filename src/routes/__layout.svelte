@@ -6,16 +6,18 @@
 	import type { LoadOutput } from '@sveltejs/kit';
 	import Icons from '@src/icons';
 	import Icon from '@src/components/Icon.svelte';
-	import {servers} from '@src/store';
+	import { servers } from '@src/store';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-import { detach } from 'svelte/internal';
-	
+	import Button from '@src/components/Button.svelte';
+	import NotificationCentre from '@src/components/NotificationCentre.svelte';
+	import { notifCenter } from '@src/NotificationStore';
+
 	const unauthed: string[] = ['/auth/login', '/auth/register'];
 	const redirectUnauthorized = unauthed[0];
 	const redirectAuthorized = '/home';
 
-	export async function load({session, url}): Promise<LoadOutput> {
+	export async function load({ session, url }): Promise<LoadOutput> {
 		return { props: {} };
 		const requiresAuth = !unauthed.find((r) => r === url.pathname);
 		let loggedIn = Object.keys(session).length > 0;
@@ -31,7 +33,6 @@ import { detach } from 'svelte/internal';
 </script>
 
 <script lang="ts">
-
 	let items : App.UI.MainNavItem[] = [];
 	let lastPath : string | undefined;
 	const buttons : {[name: string]: App.UI.MainNavItem} = {
@@ -49,19 +50,29 @@ import { detach } from 'svelte/internal';
 		notifications: {
 			icon: Icons.NOTIFICATION,
 			text: "Notifications",
-			onClick: () => console.log('toggle nc'),
+			onClick: () => {
+				show = !show;
+				console.log({show});
+			},
 		},
 	};
-	let active : number = -1;
+	let active: number = -1;
 
-	servers.subscribe(val => {
+	servers.subscribe((val) => {
 		updateServers(val);
 	});
 
 	onMount(() => {
 		updateServers($servers);
+		notifCenter.init([
+			'Maurice is playing a game',
+			'Maurice is listening to spotify',
+			'Maurice is watching a movie',
+			'Maurice is watching a show',
+			'Maurice is watching a game'
+		]);
 	});
-	
+
 	function updateServers(servers: App.Server[]) {
 		items = [
 			buttons.home,
@@ -70,7 +81,7 @@ import { detach } from 'svelte/internal';
 					img: curr.img,
 					icon: Icons.SERVER,
 					text: curr.name,
-					path: "/server/" + curr.id,
+					path: '/server/' + curr.id
 				});
 				return acc;
 			}, []),
@@ -79,20 +90,23 @@ import { detach } from 'svelte/internal';
 		];
 	}
 
-	function onClick(from: App.UI.MainNavItem, to: App.UI.MainNavItem) : void {
+	function onClick(from: App.UI.MainNavItem | undefined, to: App.UI.MainNavItem) : void {
+		if (to.onClick) to.onClick();
 		// make each item go back in history if clicked again
-		if (
-			lastPath
-			&& from?.path === to?.path
-			&& lastPath !== to?.path) {
+		if (lastPath && from?.path === to?.path && lastPath !== to?.path) {
 			goto(lastPath);
 		}
 		if (from) lastPath = from.path;
 	}
+
+	let show: boolean = false;
 </script>
 
 <template>
 	<Tooltip/>
+	{#if show && $notifCenter.length}
+		<NotificationCentre center={notifCenter} />
+	{/if}
 	<nav>
 		<Navigation
 			{items}
@@ -153,6 +167,4 @@ import { detach } from 'svelte/internal';
 			@apply flex-1 h-full;
 		}
 	}
-
-
 </style>

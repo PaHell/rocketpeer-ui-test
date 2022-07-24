@@ -2,8 +2,9 @@
 	import Icon from '@src/icons/notification_close.svg';
 	let show: Boolean = false;
 	import { onMount } from 'svelte';
+
 	// all the Notification Center Stuff happening here :}
-	import { center } from '@src/NotificationStore';
+	export let center: any;
 
 	const handleDismiss = (message: string) => {
 		center.dismiss(message);
@@ -26,69 +27,30 @@
 		show = false;
 	};
 
-	onMount(() => {
-		center.init([
-			'Maurice is playing a game',
-			'Maurice is listening to spotify',
-			'Maurice is watching a movie',
-			'Maurice is watching a show',
-			'Maurice is watching a game'
-		]);
-	});
+	onMount(() => {});
 </script>
 
 <template>
-	<!-- notification center in header-->
-	<button class="relative" on:click={handlePopup}>
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			class="w-6 h-6"
-		>
-			<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-			<path d="M13.73 21a2 2 0 0 1-3.46 0" />
-		</svg>
-		{#if $center.length}
-			<span class="badge">{$center.length}</span>
-		{/if}
-	</button>
-
-	{#if show && $center.length}
-		<!-- button to close popup -->
-		<button
-			tabindex="-1"
-			class="fixed inset-0 w-full h-full cursor-default focus:outline-none"
-			on:click|preventDefault={() => (show = false)}
-		/>
-
-		<div class="absolute right-4 p-3 mt-1 text-gray-600 bg-gray-100 rounded shadow-md messages">
-			<ul class="space-y-3">
-				{#each $center as message}
-					<li class="p-3 border rounded flex">
-						<p>{message}</p>
-						<div class="mt-1 absolute right-2">
-							<button
-								class="px-2 rounded-sm flex justify-end"
-								on:click={() => handleDismiss(message)}
-							>
-								<img src={Icon} alt="close" />
-							</button>
-						</div>
-					</li>
-				{/each}
-			</ul>
-			<div class="flex justify-end mt-3">
-				<button class="px-2 text-sm rounded-sm" on:click={clearAll}>Clear All</button>
-			</div>
+	<div class="absolute right-2 p-3 mt-20 text-gray-600 bg-gray-100 rounded shadow-md messages z-50">
+		<ul class="space-y-3">
+			{#each $center as message}
+				<li class="p-3 border rounded flex">
+					<p>{message}</p>
+					<div class="mt-1 absolute right-2">
+						<button
+							class="px-2 rounded-sm flex justify-end"
+							on:click={() => handleDismiss(message)}
+						>
+							<img src={Icon} alt="close" />
+						</button>
+					</div>
+				</li>
+			{/each}
+		</ul>
+		<div class="flex justify-end mt-3">
+			<button class="px-2 text-sm rounded-sm" on:click={clearAll}>Clear All</button>
 		</div>
-	{/if}
+	</div>
 </template>
 
 <style>
