@@ -26,7 +26,7 @@
 			{:else if user.img}
 				<img src={user.img} alt="" />
 			{:else}
-				<p>{getInitials()}</p>
+				<p class="sec">{getInitials()}</p>
 			{/if}
 		</div>
 	</div>
@@ -40,18 +40,17 @@
 		& > div {
 			@apply flex justify-center items-center
 			overflow-hidden
-			bg-gray-900 rounded-full;
+			bg-gray-700 rounded-full;
 			& > img {
 				@apply w-auto h-full;
 			}
 			& > p {
-				@apply text-center text-white text-opacity-50
-				text-base whitespace-nowrap
-				pb-[1.25px]
-				leading-none;
+				@apply text-center whitespace-nowrap
+				text-tri leading-none
+				mt-[1.5px];
 
 				&:first-letter {
-					@apply text-white text-opacity-100;
+					@apply text-white;
 				}
 			}
 		}

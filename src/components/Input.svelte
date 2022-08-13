@@ -40,7 +40,7 @@
 </script>
 
 <template>
-	<div class="form-control w-full">
+	<div class="input">
 		{#if label}
 			<label class="label" for={label ?? placeholder}>
 				<span class="label-text">{labelPosition == 0 ? label : ''}</span>
@@ -68,7 +68,12 @@
 </template>
 
 <style global lang="postcss">
-	.icon {
-		@apply text-[24px];
+	.input {
+		@apply flex w-full;
+		& > input {
+			@apply bg-transparent
+			placeholder:text-gray-100 text-white
+			outline-none caret-accent-500;
+		}
 	}
 </style>

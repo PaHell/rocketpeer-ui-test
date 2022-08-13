@@ -11,30 +11,22 @@
 		| 'primary'
 		| 'secondary'
 		| 'accent'
-		| 'ghost'
-		| 'link'
-		| 'info'
 		| 'success'
 		| 'warning'
-		| 'error'
-		| '' = '';
+		| 'danger'
+		| 'link' = 'secondary';
 	/*
 		btn
 		btn-primary
 		btn-secondary
 		btn-accent
 	*/
-	export let size: 'xs' | 'sm' | 'lg' | undefined = undefined;
-	export let form: 'circle' | 'square' | undefined = undefined;
-	export let width: 'wide' | 'block' | undefined = undefined;
 	export let active = false;
 	export let disabled = false;
-	export let outlined = false;
 	export let loading = false;
-	export let reverse = false;
 	export let focusOnMount = false;
-	// this is ugly af
-	export let glass = false;
+	export let small = false;
+	export let css = "";
 
 	let ref: HTMLButtonElement | undefined;
 
@@ -52,12 +44,9 @@
 		bind:this={ref}
 		on:click
 		{disabled}
-		class="btn btn-{color} btn-{size} btn-{form} btn-{width}"
-		class:glass
-		class:loading
-		class:flex-row-reverse={reverse}
+		class="btn btn-{color} {css}"
 		class:btn-active={active}
-		class:btn-outline={outlined}
+		class:btn-small={small}
 	>
 		{#if icon}
 			<Icon name={icon} />
@@ -65,8 +54,74 @@
 		{#if text}
 			<p>{text}</p>
 		{/if}
+		<slot/>
 	</button>
 </template>
 
 <style global lang="postcss">
+	.btn {
+		@apply flex items-center justify-center
+		flex-shrink-0
+		h-10 px-2 min-w-[1.5rem] rounded
+		text-white;
+
+		& > p {
+			@apply mt-[1px] px-1;
+		}
+		& > .icon {
+			@apply w-[24px];
+		}
+
+		&.btn-small {
+			@apply h-8;
+			& > p {
+				@apply text-sm font-semibold
+				overflow-hidden whitespace-nowrap text-ellipsis;
+			}
+		}
+
+		&.btn-primary {
+			@apply bg-button-normal;
+			&:hover { @apply bg-button-hover; }
+			&:active { @apply bg-button-active; }
+		}
+		&.btn-secondary,
+		&.btn-link {
+			@apply bg-transparent;
+			& > .icon { @apply text-tri; }
+			&:hover {
+				& > .icon { @apply text-sec; }
+			}
+			&:active {
+				& > .icon { @apply text-pri; }
+			}
+		}
+		&.btn-accent {
+			@apply bg-accent-500;
+			&:hover { @apply bg-accent-400; }
+			&:active { @apply bg-accent-600; }
+		}
+		&.btn-success {
+			@apply bg-success-500;
+			&:hover { @apply bg-success-400; }
+			&:active { @apply bg-success-600; }
+		}
+		&.btn-warning {
+			@apply bg-warning-500;
+			&:hover { @apply bg-warning-400; }
+			&:active { @apply bg-warning-600; }
+		}
+		&.btn-danger {
+			@apply bg-danger-500;
+			&:hover { @apply bg-danger-400; }
+			&:active { @apply bg-danger-600; }
+		}
+		&.btn-link {
+			&:hover {
+				& > p {
+					@apply underline;
+				}
+			}
+		}
+	}
 </style>

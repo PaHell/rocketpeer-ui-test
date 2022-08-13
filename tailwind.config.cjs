@@ -1,15 +1,18 @@
+const gray = {
+	0: '#b9bbbe',
+	100: '#96989d',
+	200: '#454950',
+	300: '#42464d',
+	400: '#40444b',
+	500: '#36393f',
+	550: '#32353b',
+	600: '#2f3136',
+	700: '#202225',
+	800: '#292b2f',
+	900: '#18191c'
+};
+
 module.exports = {
-	plugins: [require('daisyui')],
-	daisyui: {
-		styled: true,
-		themes: true,
-		base: true,
-		utils: true,
-		logs: true,
-		rtl: false,
-		prefix: '',
-		darkTheme: 'dark'
-	},
 	content: [
 		//'./src/lib/**/*.svelte',
 		//'./src/routes/**/*.svelte',
@@ -33,17 +36,7 @@ module.exports = {
 			black: colors.black,
 			white: colors.white,
 			slate: colors.slate,
-			gray: {
-				100: '#cffafe',
-				200: '#a5f3fc',
-				300: '#67e8f9',
-				400: '#22d3ee',
-				500: '#40444b',
-				600: '#36393f',
-				700: '#2f3136',
-				800: '#292b2f',
-				900: '#202225',
-			},
+			gray,
 			zinc: colors.zinc,
 			neutral: colors.neutral,
 			stone: colors.stone,
@@ -68,7 +61,16 @@ module.exports = {
 			danger: colors.red,
 			warning: colors.amber,
 			success: colors.emerald,
-			info: colors.violet
+			info: colors.violet,
+			accent: colors.emerald,
+			pri: 'white',
+			sec: gray[0],
+			tri: gray[100],
+			button: {
+				normal: '#45545c',
+				hover: '#686d73',
+				active: '#72767d',
+			}
 		}),
 		columns: {
 			auto: 'auto',
@@ -375,6 +377,7 @@ module.exports = {
 		},
 		fontFamily: {
 			sans: [
+				'Overpass',
 				'"IBM Plex Sans"',
 				'ui-sans-serif',
 				'system-ui',

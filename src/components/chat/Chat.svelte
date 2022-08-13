@@ -9,8 +9,6 @@
 
 <script lang="ts">
 	export let messages: App.Message[] = [];
-	export let users: App.User[] = [];
-	export let self: App.User | undefined;
 
 	let refConversation: SvelteComponentDev | undefined;
 
@@ -23,15 +21,19 @@
 		//input = "";
 		setTimeout(refConversation?.scrollToBottom, 0);
 	}
+
+	function openShare() {
+	}
 </script>
 
 <template>
 	<div class="chat">
-		<header>
-			<slot />
-		</header>
-		<Conversation bind:this={refConversation} bind:messages bind:users bind:self />
+		<Conversation bind:this={refConversation} bind:messages />
 		<footer>
+			<Button
+				on:click={openShare}
+				icon={Icons.UPLOAD}
+			/>
 			<Input
 				placeholder="Type a message..."
 				color="accent"
@@ -45,7 +47,6 @@
 				text="Send"
 				color="accent"
 				disabled={!input}
-				reverse
 			/>
 		</footer>
 	</div>
@@ -54,16 +55,6 @@
 <style lang="postcss" global>
 	.chat {
 		@apply flex flex-col;
-		& > header,
-		& > footer {
-			@apply bg-gray-700 shadow relative;
-		}
-		& > header {
-			@apply flex justify-center items-center h-16;
-			& > h1 {
-				@apply px-4;
-			}
-		}
 		& > .conversation {
 			@apply flex-1 flex-shrink-0;
 			@media screen and (-webkit-min-device-pixel-ratio: 0) {
@@ -71,7 +62,8 @@
 			}
 		}
 		& > footer {
-			@apply flex p-4;
+			@apply flex m-4 relative
+			bg-gray-400 rounded shadow;
 			& > *:not(:last-child) {
 				@apply mr-2;
 			}

@@ -1,21 +1,20 @@
-<script context="module">
+<script lang="ts" context="module">
 	import UserImage from '../UserImage.svelte';
+	import {user} from '@src/store';
+	import type {App } from '@src/app';
 </script>
 
 <script lang="ts">
 	export let message: App.Message;
-	export let self: App.User | undefined;
 </script>
 
 <template>
-	<div class="message" class:self={message._user?.id === self?.id}>
+	<div class="message" class:self={message._user?.id === $user?.id}>
 		<div class="bubble">
 			<p class="text-xs">{message._user?.name}</p>
 			<p>{message.content}</p>
 		</div>
-		<div class="image">
-			<UserImage user={message._user} />
-		</div>
+		<UserImage user={message._user} />
 	</div>
 </template>
 
@@ -24,11 +23,9 @@
 		@apply flex justify-end py-2
     select-none
     transition-colors;
-		&:hover {
-			@apply bg-gray-700;
-		}
+		&:hover,
 		&:active {
-			@apply bg-gray-600;
+			@apply bg-gray-550;
 		}
 		&.self {
 			& > *:not(:last-child) {
@@ -44,18 +41,12 @@
 				@apply mr-2;
 			}
 			& > .bubble {
-				@apply bg-gray-900 rounded-bl-none;
+				@apply bg-gray-700 rounded-bl-none;
 			}
 		}
 
 		& > .bubble {
-			@apply bg-primary p-2 rounded-md
-        text-white;
-			& > p {
-				&:first-child {
-					@apply opacity-50;
-				}
-			}
+			@apply bg-accent-500 p-2 rounded-md;
 		}
 
 		& > .image {

@@ -1,27 +1,27 @@
 <script lang="ts">
-	let text: string = "";
-	let top : number = 100;
-	let left : number = 100;
+	let text: string = '';
+	let top: number = 100;
+	let left: number = 100;
 
 	function onMouseMove(event: MouseEvent) {
 		let elem = document.elementFromPoint(event.pageX, event.pageY);
 		if (!elem) return;
 		do {
-			text = getTooptipText(elem) ?? "";
+			text = getTooptipText(elem) ?? '';
 			if (!text) elem = elem.parentElement;
-		} while(elem && !text)
+		} while (elem && !text);
 		if (!elem) return;
 		const rect = elem.getBoundingClientRect();
 		top = rect.top + rect.height;
-		left = rect.left + .5 * rect.width;
+		left = rect.left + 0.5 * rect.width;
 	}
 
-	function getTooptipText(element: Element) : string | undefined {
-		return element.attributes.getNamedItem("data-tooltip")?.value;
+	function getTooptipText(element: Element): string | undefined {
+		return element.attributes.getNamedItem('data-tooltip')?.value;
 	}
 </script>
 
-<svelte:window on:mousemove={onMouseMove}/>
+<svelte:window on:mousemove={onMouseMove} />
 
 <template>
 	<div class="_tooltip" class:show={text} style="top: {top}px; left: {left}px;">

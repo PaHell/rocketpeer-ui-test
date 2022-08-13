@@ -1,19 +1,19 @@
-<script context="module">
+<script lang="ts" context="module">
 	import { onMount } from 'svelte';
 	import Message from '@src/components/chat/Message.svelte';
+	import type { App } from '@src/app';
+	import { users } from '@src/store';
 </script>
 
 <script lang="ts">
 	export let messages: App.Message[] = [];
-	export let users: App.User[] = [];
-	export let self: App.User | undefined;
 
 	let ref: HTMLDivElement | undefined;
 	let length = 0;
 
 	onMount(() => {
 		messages.map((msg) => {
-			msg._user = users.find((u) => u.id === msg.user_id);
+			msg._user = $users.find((u) => u.id === msg.user_id);
 		});
 		messages = messages;
 	});
@@ -26,7 +26,7 @@
 <template>
 	<div bind:this={ref} class="conversation">
 		{#each messages as message}
-			<Message {message} {self} />
+			<Message {message} />
 		{/each}
 	</div>
 </template>
@@ -58,13 +58,7 @@
 			}
 
 			& > .bubble {
-				@apply bg-accent p-2 rounded-md
-				text-white;
-				& > p {
-					&:first-child {
-						@apply opacity-50;
-					}
-				}
+				@apply bg-accent-500 p-2 rounded-md;
 			}
 
 			& > .image {

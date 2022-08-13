@@ -2,32 +2,29 @@
 	import Tooltip from '@src/components/Tooltip.svelte';
 	import Image from '@src/components/Image.svelte';
 	import Icon from '@src/components/Icon.svelte';
-	import Navigation from "@src/components/Navigation.svelte";
+	import type NavMatch from '@src/navMatch';
+	import type { App } from '@src/app';
+	import NavLink from "./NavLink.svelte";
 </script>
 
 <script lang="ts">
-	export let items : App.UI.NavBarItem[] = [];
-	export let active : number = -1;
-	export let css : string = "";
+	export let items: App.UI.NavBarItem[] = [];
+	export let css: string = '';
 	export let vertical = false;
 </script>
 
 <template>
 	<nav class="_navbar {css}" class:vertical>
-		<Navigation
-			{items}
-			bind:active
-			pathSelector={(item) => item.path}
-			on:click
-			let:item
-			let:index>
+		{#each items as item}
+			<NavLink path={item.path} match={item.match}>
 				{#if item.icon}
-					<Icon name={item.icon}/>
+					<Icon name={item.icon} />
 				{/if}
 				{#if item.text}
 					<p>{item.text}</p>
 				{/if}
-		</Navigation>
+			</NavLink>
+		{/each}
 	</nav>
 </template>
 
@@ -49,7 +46,7 @@
 		& > button {
 			@apply flex items-center
 			rounded;
-			
+
 			&:hover {
 				@apply bg-gray-700;
 			}
@@ -57,7 +54,7 @@
 				@apply bg-gray-600;
 			}
 			&.active {
-				@apply bg-accent;
+				@apply bg-accent-500;
 			}
 
 			& > .icon {

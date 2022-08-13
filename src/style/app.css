@@ -1,5 +1,41 @@
+@import '@fontsource/overpass';
 @import 'remixicon/fonts/remixicon.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* TEXT */
+h1,
+h2,
+h3,
+p {
+    @apply text-pri;
+}
+
+h1 {
+    @apply text-xl font-medium;
+}
+h2 {
+    @apply text-lg;
+}
+p {
+    @apply text-base;
+}
+
+/* INPUT */
+
+button,
+input,
+textarea {
+    @apply block;
+}
+
+/* List */
+
+.list > * {
+    @apply w-full flex
+    bg-gray-600 rounded;
+    &:hover { @apply bg-gray-400; }
+    &:active { @apply bg-gray-300; }
+}

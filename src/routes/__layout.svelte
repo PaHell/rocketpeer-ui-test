@@ -1,17 +1,18 @@
 <script context="module" lang="ts">
 	import '../style/app.css';
 	import Tooltip from '@src/components/Tooltip.svelte';
-	import Navigation from "@src/components/Navigation.svelte";
 	import Image from '@src/components/Image.svelte';
 	import type { LoadOutput } from '@sveltejs/kit';
 	import Icons from '@src/icons';
 	import Icon from '@src/components/Icon.svelte';
-	import { servers } from '@src/store';
+	import { servers, user, users } from '@src/store';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import Button from '@src/components/Button.svelte';
 	import NotificationCentre from '@src/components/NotificationCentre.svelte';
 	import { notifCenter } from '@src/NotificationStore';
+	import NavLink from '@src/components/NavLink.svelte';
+	import NavMatch from '@src/navMatch';
 
 	const unauthed: string[] = ['/auth/login', '/auth/register'];
 	const redirectUnauthorized = unauthed[0];
@@ -33,37 +34,11 @@
 </script>
 
 <script lang="ts">
-	let items : App.UI.MainNavItem[] = [];
-	let lastPath : string | undefined;
-	const buttons : {[name: string]: App.UI.MainNavItem} = {
-		home: {
-			icon: Icons.HOME,
-			text: "Home",
-			path: "/messages/friends/online",
-		},
-		settings: {
-			icon: Icons.SETTINGS,
-			text: "Settings",
-			path: "/settings",
-			css: 'mt-auto',
-		},
-		notifications: {
-			icon: Icons.NOTIFICATION,
-			text: "Notifications",
-			onClick: () => {
-				show = !show;
-				console.log({show});
-			},
-		},
-	};
 	let active: number = -1;
-
-	servers.subscribe((val) => {
-		updateServers(val);
-	});
+	let indicator: HTMLDivElement | undefined;
 
 	onMount(() => {
-		updateServers($servers);
+		user.set($users[0]);
 		notifCenter.init([
 			'Maurice is playing a game',
 			'Maurice is listening to spotify',
@@ -72,57 +47,42 @@
 			'Maurice is watching a game'
 		]);
 	});
-
-	function updateServers(servers: App.Server[]) {
-		items = [
-			buttons.home,
-			...servers.reduce<App.UI.MainNavItem[]>((acc, curr) => {
-				acc.push({
-					img: curr.img,
-					icon: Icons.SERVER,
-					text: curr.name,
-					path: '/server/' + curr.id
-				});
-				return acc;
-			}, []),
-			buttons.settings,
-			buttons.notifications
-		];
-	}
-
-	function onClick(from: App.UI.MainNavItem | undefined, to: App.UI.MainNavItem) : void {
-		if (to.onClick) to.onClick();
-		// make each item go back in history if clicked again
-		if (lastPath && from?.path === to?.path && lastPath !== to?.path) {
-			goto(lastPath);
-		}
-		if (from) lastPath = from.path;
-	}
-
 	let show: boolean = false;
 </script>
 
 <template>
-	<Tooltip/>
+	<Tooltip />
 	{#if show && $notifCenter.length}
 		<NotificationCentre center={notifCenter} />
 	{/if}
 	<nav>
-		<Navigation
-			{items}
-			bind:active
-			pathSelector={(item) => item.path ?? ""}
-			on:click={(e) => onClick(e.detail.from, e.detail.to)}
-			let:item
-			let:index>
-			<div data-tooltip={item.text}>
-				{#if item.img}
-					<Image src={item.img} alt={item.text}/>
-				{:else if item.icon}
-					<Icon name={item.icon}/>
-				{/if}
+		<NavLink path="/messages/friends/online" match={NavMatch.FIRST}>
+			<div>
+				<Icon name={Icons.HOME} />
 			</div>
-		</Navigation>
+		</NavLink>
+		<hr />
+		{#each $servers as server}
+			<NavLink path="/server/{server.id}" match={NavMatch.ALL}>
+				<div>
+					{#if server.img}
+						<Image src={server.img} alt={server.text} />
+					{:else}
+						<Icon name={Icons.SERVER} />
+					{/if}
+				</div>
+			</NavLink>
+		{/each}
+		<NavLink path="/create" match={NavMatch.ALL}>
+			<div>
+				<Icon name={Icons.ADD} />
+			</div>
+		</NavLink>
+		<NavLink path="/discover" match={NavMatch.ALL}>
+			<div>
+				<Icon name={Icons.DISCOVER} />
+			</div>
+		</NavLink>
 	</nav>
 	<main>
 		<slot />
@@ -138,30 +98,52 @@
 	body {
 		@apply flex;
 		& > nav {
-			@apply flex flex-col bg-gray-900;
+			@apply flex flex-col bg-gray-700;
+			& > hr {
+				@apply my-2 mx-5
+				border-0 border-t-[2px] border-gray-500;
+			}
 			& > button {
-                @apply flex justify-center items-center
+				@apply flex justify-center items-center
                 p-2 transition-colors;
-                & > div {
-                    @apply overflow-hidden
+				& > div {
+					@apply overflow-hidden
+					w-12 h-12
                     flex items-center
-                    bg-gray-800 rounded-full
-                    text-accent
+                    bg-gray-500 rounded-full
+                    text-accent-500
                     transition-all ease-linear;
-                    & > .icon {
-                        @apply w-12 h-12
-                        leading-[3rem];
-                    }
-                }
-                &:hover,
-                &:active,
-                &.active {
-                    & > div {
-                        @apply bg-accent rounded-xl text-white;
-                    }
-                }
-    
-            }
+					& > .icon {
+						@apply w-full leading-[3rem];
+					}
+				}
+				&:before {
+					content: '';
+					@apply w-1 h-0 block absolute
+					bg-transparent rounded-r-full
+					translate-x-[-1.875rem]
+					transition-all;
+					will-change: height, background-color;
+					/* 4rem / 2 - widthOfIndicator */
+				}
+				&:hover:before {
+					@apply h-5 bg-white;
+				}
+				&.active:before {
+					@apply h-8 bg-white;
+				}
+				&:hover,
+				&:active,
+				&.active {
+					& > div {
+						@apply bg-accent-500 rounded-xl;
+						@apply text-white !important;
+					}
+				}
+				&:first-child > div {
+					@apply text-tri;
+				}
+			}
 		}
 		& > main {
 			@apply flex-1 h-full;
