@@ -55,8 +55,11 @@
 	{#if show && $notifCenter.length}
 		<NotificationCentre center={notifCenter} />
 	{/if}
+	<div id="app">
+
 	<nav>
-		<NavLink path="/messages/friends/online" match={NavMatch.FIRST}>
+		<p>{import.meta.env.VITE_APP_NAME}</p>
+		<NavLink path="/home/friends/online" match={NavMatch.FIRST}>
 			<div>
 				<Icon name={Icons.HOME} />
 			</div>
@@ -87,6 +90,8 @@
 	<main>
 		<slot />
 	</main>
+</div>
+
 </template>
 
 <style global lang="postcss">
@@ -95,20 +100,24 @@
 		@apply w-screen h-screen overflow-hidden;
 	}
 
-	body {
-		@apply flex;
-		& > nav {
-			@apply flex flex-col bg-gray-700;
+		#app {
+			@apply flex h-full bg-gray-700;
+
+			& > nav {
+				@apply flex flex-col;
+			& > p {
+				@apply pt-1 text-center text-tri font-bold text-xs;
+			}
 			& > hr {
 				@apply my-2 mx-5
 				border-0 border-t-[2px] border-gray-500;
 			}
 			& > button {
 				@apply flex justify-center items-center
-                p-2 transition-colors;
+                transition-colors;
 				& > div {
 					@apply overflow-hidden
-					w-12 h-12
+					w-12 h-12 mx-3 my-1
                     flex items-center
                     bg-gray-500 rounded-full
                     text-accent-500
@@ -121,7 +130,7 @@
 					content: '';
 					@apply w-1 h-0 block absolute
 					bg-transparent rounded-r-full
-					translate-x-[-1.875rem]
+					translate-x-[-2.125rem]
 					transition-all;
 					will-change: height, background-color;
 					/* 4rem / 2 - widthOfIndicator */
@@ -146,7 +155,8 @@
 			}
 		}
 		& > main {
-			@apply flex-1 h-full;
+			@apply flex-1;
 		}
 	}
+
 </style>

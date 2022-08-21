@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import type { App } from '@src/app';
 
 export const user = writable<App.User | undefined>();
 export const users = (() => {
@@ -95,5 +96,73 @@ export const servers = (() => {
 				return val;
 			});
 		}
+	};
+})();
+export const voiceChannels = (() => {
+	const { subscribe, update, set } = writable<App.VoiceChannel[]>([
+		{
+			id: 'fullmuteafkgesocks',
+			name: 'FullMute & AFK Gesocks',
+			order: 1,
+			server_id: 'hellebrand2021'
+		},
+		{
+			id: 'diegruppe',
+			name: 'Die Gruppe',
+			order: 2,
+			server_id: 'hellebrand2021'
+		},
+		{
+			id: 'cafe',
+			name: 'Cafe',
+			order: 3,
+			server_id: 'hellebrand2021'
+		},
+		{
+			id: 'bielefeld',
+			name: 'Bielefeld',
+			order: 4,
+			server_id: 'hellebrand2021'
+		},
+		{
+			id: 'lounge',
+			name: 'Lounge',
+			order: 1,
+			server_id: 'fi2021'
+		},
+		{
+			id: 'berufsschule',
+			name: 'Berufsschule',
+			order: 2,
+			server_id: 'fi2021'
+		},
+	]);
+	return {
+		subscribe,
+		set,
+		update,
+	};
+})();
+export const textChannels = (() => {
+	const { subscribe, update, set } = writable<App.TextChannel[]>([
+		{
+			id: 'teletext',
+			name: 'teletext',
+			order: 0,
+			server_id: 'hellebrand2021',
+			messages: []
+		},
+		{
+			id: 'allgemein',
+			name: 'Allgemein',
+			order: 0,
+			server_id: 'fi2021',
+			messages: []
+		},
+	]);
+	return {
+		subscribe,
+		set,
+		update,
 	};
 })();

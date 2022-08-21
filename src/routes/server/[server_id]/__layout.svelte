@@ -4,7 +4,7 @@
 	import Icon from "@src/components/Icon.svelte";
 	import Icons from "@src/icons";
 	import UserImage from "@src/components/UserImage.svelte";
-	import { servers, users } from "@src/store";
+	import { users, servers, voiceChannels, textChannels } from "@src/store";
 	import type { App } from "@src/app";
 	import { onMount } from "svelte";
 	import { page } from "$app/stores";
@@ -15,11 +15,47 @@
 </script>
 
 <script lang="ts">
-	export let server : App.Server | undefined;
+import NavLink from "@src/components/NavLink.svelte";
+import { append } from "svelte/internal";
+import { goto } from "$app/navigation";
 
-	$: {
-		server = $servers.find(s => s.id === $page.params.id);
-	}
+	export let server : App.Server|undefined;
+	export let channels : (App.TextChannel|App.VoiceChannel)[] = [];
+
+	onMount(() => {
+		server = $servers.find(s => s.id === $page.params.server_id);
+		channels = [
+			...$textChannels.filter(s => s.server_id === $page.params.server_id),
+			...$voiceChannels.filter(s => s.server_id === $page.params.server_id),
+		];
+		channels = channels.sort(c => c.order);
+		console.log($textChannels);
+	});
+	page.subscribe(val => {
+		server = $servers.find(s => s.id === val.params.server_id);
+		channels = [
+			...$textChannels.filter(s => s.server_id === val.params.server_id),
+			...$voiceChannels.filter(s => s.server_id === val.params.server_id),
+		];
+		channels = channels.sort(c => c.order);
+	});
+	servers.subscribe(val => {
+		server = val.find(s => s.id === $page.params.server_id);
+	});
+	textChannels.subscribe(val => {
+		channels = [
+			...val.filter(s => s.server_id === $page.params.server_id),
+			...$voiceChannels.filter(s => s.server_id === $page.params.server_id),
+		];
+		channels = channels.sort(c => c.order);
+	});
+	voiceChannels.subscribe(val => {
+		channels = [
+			...$textChannels.filter(s => s.server_id === $page.params.server_id),
+			...val.filter(s => s.server_id === $page.params.server_id),
+		];
+		channels = channels.sort(c => c.order);
+	});
 </script>
 
 <template>
@@ -49,16 +85,21 @@
 						/>
 					</header>
 					<ul class="list">
-						<Button
-							on:click={() => {}}
-							icon={Icons.TEXT_CHANNEL}
-							text="teletext">
-						</Button>	
-						<Button
-							on:click={() => {}}
-							icon={Icons.VOICE_CHANNEL}
-							text="Die Gruppe">
-						</Button>
+						{#each channels as channel}
+						{#if Object.hasOwn(channel, "messages")}
+							<Button
+								on:click={() => goto(`/server/${server?.id}/${channel.id}`)}
+								icon={Icons.TEXT_CHANNEL}
+								text={channel.name}>
+							</Button>	
+						{:else}
+							<Button
+								on:click={() => goto(`/server/${server?.id}/${channel.id}`)}
+								icon={Icons.VOICE_CHANNEL}
+								text={channel.name}>
+							</Button>
+						{/if}
+				{/each}
 					</ul>
 				</div>
 			</aside>

@@ -16,6 +16,7 @@ enum Icons {
 	VOICE_CHANNEL = 'volume-up-line',
 	FRIEND = 'user-heart-line',
 	KNOWN = 'user-location-line',
+	CLOSE = 'close-line',
 }
 
 export default Icons;

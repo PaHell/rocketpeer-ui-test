@@ -44,9 +44,10 @@
 				@apply bg-gray-700 rounded-bl-none;
 			}
 		}
-
+		
 		& > .bubble {
 			@apply bg-accent-500 p-2 rounded-md;
+			& > p:first-child { @apply opacity-50; }
 		}
 
 		& > .image {

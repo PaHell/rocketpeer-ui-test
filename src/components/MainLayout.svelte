@@ -7,6 +7,7 @@ import Icons from "@src/icons";
 import Button from "./Button.svelte";
 import UserImage from "./UserImage.svelte";
 import { user } from "@src/store";
+import { goto } from "$app/navigation";
 
 
 </script>
@@ -29,7 +30,7 @@ import { user } from "@src/store";
 				icon={Icons.SPEAKER}
 			/>
 			<Button
-				on:click={() => {}}
+				on:click={() => goto("/settings")}
 				icon={Icons.SETTINGS}
 			/>
 		</footer>
@@ -57,7 +58,7 @@ import { user } from "@src/store";
 		& > footer {
 			@apply flex items-center
 			relative;
-			box-shadow: 0 4px 4px -4px rgba(0,0,0, .5);
+			box-shadow: 0 2px 2px -2px rgba(0,0,0, .75);
 		}
 		& > header.sidebar {
 			grid-area: headerSidebar;

@@ -7,20 +7,20 @@
 	let items: App.UI.NavBarItem[] = [
 		{
 			text: 'Online',
-			path: '/messages/friends/online'
+			path: '/home/friends/online'
 		},
 		{
 			text: 'All',
-			path: '/messages/friends/all'
+			path: '/home/friends/all'
 		},
 		{
 			text: 'Pending',
-			path: '/messages/friends/pending'
+			path: '/home/friends/pending'
 		},
 		{
 			icon: Icons.ADD,
 			text: 'Add',
-			path: '/messages/friends/add'
+			path: '/home/friends/add'
 		}
 	];
 	let active: number = -1;

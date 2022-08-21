@@ -38,4 +38,5 @@ textarea {
     bg-gray-600 rounded;
     &:hover { @apply bg-gray-400; }
     &:active { @apply bg-gray-300; }
+    &.active { @apply bg-gray-200; }
 }
