@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
 	import UserImage from '../UserImage.svelte';
-	import {user} from '@src/store';
-	import type {App } from '@src/app';
+	import { user } from '@src/store';
+	import type { App } from '@src/app';
 </script>
 
 <script lang="ts">
@@ -44,10 +44,12 @@
 				@apply bg-gray-700 rounded-bl-none;
 			}
 		}
-		
+
 		& > .bubble {
 			@apply bg-accent-500 p-2 rounded-md;
-			& > p:first-child { @apply opacity-50; }
+			& > p:first-child {
+				@apply opacity-50;
+			}
 		}
 
 		& > .image {

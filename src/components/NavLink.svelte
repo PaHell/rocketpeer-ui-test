@@ -12,8 +12,6 @@
 		[
 			NavMatch.FIRST,
 			(p1, p2) => {
-				console.log(p1.split('/')[1]);
-				console.log(p2.split('/')[1]);
 				return p1.split('/')[1] === p2.split('/')[1];
 			}
 		],
@@ -53,7 +51,6 @@
 
 	function update(_path: string) {
 		let func = matchFunctions.find((i) => i[0] === match)?.[1];
-		console.log(match, path, _path, func?.(path, _path));
 		if (func) active = func(path, _path);
 	}
 

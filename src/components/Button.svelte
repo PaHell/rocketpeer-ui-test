@@ -7,14 +7,8 @@
 <script lang="ts">
 	export let icon: Icons | undefined = undefined;
 	export let text: string | undefined = undefined;
-	export let color:
-		| 'primary'
-		| 'secondary'
-		| 'accent'
-		| 'success'
-		| 'warning'
-		| 'danger'
-		| 'link' = 'secondary';
+	export let color: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'danger' | 'link' =
+		'secondary';
 	/*
 		btn
 		btn-primary
@@ -26,7 +20,7 @@
 	export let loading = false;
 	export let focusOnMount = false;
 	export let small = false;
-	export let css = "";
+	export let css = '';
 
 	let ref: HTMLButtonElement | undefined;
 
@@ -54,7 +48,7 @@
 		{#if text}
 			<p>{text}</p>
 		{/if}
-		<slot/>
+		<slot />
 	</button>
 </template>
 
@@ -82,39 +76,65 @@
 
 		&.btn-primary {
 			@apply bg-button-normal;
-			&:hover { @apply bg-button-hover; }
-			&:active { @apply bg-button-active; }
+			&:hover {
+				@apply bg-button-hover;
+			}
+			&:active {
+				@apply bg-button-active;
+			}
 		}
 		&.btn-secondary,
 		&.btn-link {
 			@apply bg-transparent;
-			& > .icon { @apply text-tri; }
+			& > .icon {
+				@apply text-tri;
+			}
 			&:hover {
-				& > .icon { @apply text-sec; }
+				& > .icon {
+					@apply text-sec;
+				}
 			}
 			&:active {
-				& > .icon { @apply text-pri; }
+				& > .icon {
+					@apply text-pri;
+				}
 			}
 		}
 		&.btn-accent {
 			@apply bg-accent-500;
-			&:hover { @apply bg-accent-400; }
-			&:active { @apply bg-accent-600; }
+			&:hover {
+				@apply bg-accent-400;
+			}
+			&:active {
+				@apply bg-accent-600;
+			}
 		}
 		&.btn-success {
 			@apply bg-success-500;
-			&:hover { @apply bg-success-400; }
-			&:active { @apply bg-success-600; }
+			&:hover {
+				@apply bg-success-400;
+			}
+			&:active {
+				@apply bg-success-600;
+			}
 		}
 		&.btn-warning {
 			@apply bg-warning-500;
-			&:hover { @apply bg-warning-400; }
-			&:active { @apply bg-warning-600; }
+			&:hover {
+				@apply bg-warning-400;
+			}
+			&:active {
+				@apply bg-warning-600;
+			}
 		}
 		&.btn-danger {
 			@apply bg-danger-500;
-			&:hover { @apply bg-danger-400; }
-			&:active { @apply bg-danger-600; }
+			&:hover {
+				@apply bg-danger-400;
+			}
+			&:active {
+				@apply bg-danger-600;
+			}
 		}
 		&.btn-link {
 			&:hover {

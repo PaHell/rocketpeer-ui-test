@@ -56,42 +56,40 @@
 		<NotificationCentre center={notifCenter} />
 	{/if}
 	<div id="app">
-
-	<nav>
-		<p>{import.meta.env.VITE_APP_NAME}</p>
-		<NavLink path="/home/friends/online" match={NavMatch.FIRST}>
-			<div>
-				<Icon name={Icons.HOME} />
-			</div>
-		</NavLink>
-		<hr />
-		{#each $servers as server}
-			<NavLink path="/server/{server.id}" match={NavMatch.ALL}>
+		<nav>
+			<p>{import.meta.env.VITE_APP_NAME}</p>
+			<NavLink path="/home/friends/online" match={NavMatch.FIRST}>
 				<div>
-					{#if server.img}
-						<Image src={server.img} alt={server.text} />
-					{:else}
-						<Icon name={Icons.SERVER} />
-					{/if}
+					<Icon name={Icons.HOME} />
 				</div>
 			</NavLink>
-		{/each}
-		<NavLink path="/create" match={NavMatch.ALL}>
-			<div>
-				<Icon name={Icons.ADD} />
-			</div>
-		</NavLink>
-		<NavLink path="/discover" match={NavMatch.ALL}>
-			<div>
-				<Icon name={Icons.DISCOVER} />
-			</div>
-		</NavLink>
-	</nav>
-	<main>
-		<slot />
-	</main>
-</div>
-
+			<hr />
+			{#each $servers as server}
+				<NavLink path="/server/{server.id}" match={NavMatch.ALL}>
+					<div>
+						{#if server.img}
+							<Image src={server.img} alt={server.text} />
+						{:else}
+							<Icon name={Icons.SERVER} />
+						{/if}
+					</div>
+				</NavLink>
+			{/each}
+			<NavLink path="/create" match={NavMatch.ALL}>
+				<div>
+					<Icon name={Icons.ADD} />
+				</div>
+			</NavLink>
+			<NavLink path="/discover" match={NavMatch.ALL}>
+				<div>
+					<Icon name={Icons.DISCOVER} />
+				</div>
+			</NavLink>
+		</nav>
+		<main>
+			<slot />
+		</main>
+	</div>
 </template>
 
 <style global lang="postcss">
@@ -100,11 +98,11 @@
 		@apply w-screen h-screen overflow-hidden;
 	}
 
-		#app {
-			@apply flex h-full bg-gray-700;
+	#app {
+		@apply flex h-full bg-gray-700;
 
-			& > nav {
-				@apply flex flex-col;
+		& > nav {
+			@apply flex flex-col;
 			& > p {
 				@apply pt-1 text-center text-tri font-bold text-xs;
 			}
@@ -158,5 +156,4 @@
 			@apply flex-1;
 		}
 	}
-
 </style>

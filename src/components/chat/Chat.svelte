@@ -22,18 +22,14 @@
 		setTimeout(refConversation?.scrollToBottom, 0);
 	}
 
-	function openShare() {
-	}
+	function openShare() {}
 </script>
 
 <template>
 	<div class="chat">
 		<Conversation bind:this={refConversation} bind:messages />
 		<footer>
-			<Button
-				on:click={openShare}
-				icon={Icons.UPLOAD}
-			/>
+			<Button on:click={openShare} icon={Icons.UPLOAD} />
 			<Input
 				placeholder="Type a message..."
 				color="accent"
@@ -41,13 +37,7 @@
 				bordered
 				focusOnMount
 			/>
-			<Button
-				on:click={send}
-				icon={Icons.CONTINUE}
-				text="Send"
-				color="accent"
-				disabled={!input}
-			/>
+			<Button on:click={send} icon={Icons.CONTINUE} text="Send" color="accent" disabled={!input} />
 		</footer>
 	</div>
 </template>

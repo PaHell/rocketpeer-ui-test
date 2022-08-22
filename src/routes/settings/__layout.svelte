@@ -4,11 +4,11 @@
 	import Icons from '@src/icons';
 	import NavBar from '@src/components/NavBar.svelte';
 	import NavMatch from '@src/navMatch';
-import Input from '@src/components/Input.svelte';
-import Icon from '@src/components/Icon.svelte';
-import UserImage from '@src/components/UserImage.svelte';
-import {users} from '@src/store';
-import { goto } from '$app/navigation';
+	import Input from '@src/components/Input.svelte';
+	import Icon from '@src/components/Icon.svelte';
+	import UserImage from '@src/components/UserImage.svelte';
+	import { users } from '@src/store';
+	import { goto } from '$app/navigation';
 </script>
 
 <script lang="ts">
@@ -16,13 +16,13 @@ import { goto } from '$app/navigation';
 		{
 			icon: Icons.FRIEND,
 			text: 'Account',
-			path: '/settings/account',
+			path: '/settings/account'
 		},
 		{
 			icon: Icons.KNOWN,
 			text: 'Profile',
-			path: '/settings/profile',
-		},
+			path: '/settings/profile'
+		}
 	];
 </script>
 
@@ -34,10 +34,7 @@ import { goto } from '$app/navigation';
 		<main>
 			<slot />
 		</main>
-		<Button
-			on:click={() => goto("/home/friends/online")}
-			icon={Icons.CLOSE}
-		/>
+		<Button on:click={() => goto('/home/friends/online')} icon={Icons.CLOSE} />
 	</div>
 </template>
 
@@ -55,5 +52,4 @@ import { goto } from '$app/navigation';
 			height: calc(2.5rem + 4px);
 		}
 	}
-
 </style>

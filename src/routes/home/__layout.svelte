@@ -4,17 +4,17 @@
 	import Icons from '@src/icons';
 	import NavBar from '@src/components/NavBar.svelte';
 	import NavMatch from '@src/navMatch';
-import Input from '@src/components/Input.svelte';
-import Icon from '@src/components/Icon.svelte';
-import UserImage from '@src/components/UserImage.svelte';
-import {users} from '@src/store';
-import { goto } from '$app/navigation';
+	import Input from '@src/components/Input.svelte';
+	import Icon from '@src/components/Icon.svelte';
+	import UserImage from '@src/components/UserImage.svelte';
+	import { users } from '@src/store';
+	import { goto } from '$app/navigation';
 </script>
 
 <script lang="ts">
-import NavLink from "@src/components/NavLink.svelte";
+	import NavLink from '@src/components/NavLink.svelte';
 
-	let search: string = "";
+	let search: string = '';
 	let top: App.UI.NavBarItem[] = [
 		{
 			icon: Icons.FRIEND,
@@ -27,34 +27,26 @@ import NavLink from "@src/components/NavLink.svelte";
 			text: 'Known People',
 			path: '/home/known/online',
 			match: NavMatch.EXCEPT_LAST
-		},
+		}
 	];
 </script>
 
 <template>
 	<MainLayout>
 		<header class="sidebar">
-			<Button
-				css="messages-search"
-				on:click={() => {}}
-				text="Search in messages"
-			/>
+			<Button css="messages-search" on:click={() => {}} text="Search in messages" />
 		</header>
 		<aside>
 			<NavBar items={top} css="p-2" vertical />
-				<div class="dm-list">
-					<header>
-
-						<p>Direct Messages</p>
-						<Button
-							on:click={() => {}}
-							icon={Icons.ADD}
-						/>
-					</header>
-					<ul class="list">
-						{#each $users as user}
+			<div class="dm-list">
+				<header>
+					<p>Direct Messages</p>
+					<Button on:click={() => {}} icon={Icons.ADD} />
+				</header>
+				<ul class="list">
+					{#each $users as user}
 						<NavLink path={'/home/message/' + user.id}>
-							<UserImage user={user}/>
+							<UserImage {user} />
 							<p>{user.name}</p>
 						</NavLink>
 					{/each}
@@ -66,7 +58,6 @@ import NavLink from "@src/components/NavLink.svelte";
 </template>
 
 <style global lang="postcss">
-	
 	.dm-list {
 		& > header {
 			@apply w-full flex items-center px-4;

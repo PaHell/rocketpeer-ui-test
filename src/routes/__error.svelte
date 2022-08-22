@@ -21,5 +21,5 @@
 		& > h1 {
 			@apply text-[8rem] leading-none;
 		}
-	} 
+	}
 </style>

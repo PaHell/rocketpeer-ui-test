@@ -135,12 +135,12 @@ export const voiceChannels = (() => {
 			name: 'Berufsschule',
 			order: 2,
 			server_id: 'fi2021'
-		},
+		}
 	]);
 	return {
 		subscribe,
 		set,
-		update,
+		update
 	};
 })();
 export const textChannels = (() => {
@@ -159,10 +159,24 @@ export const textChannels = (() => {
 			server_id: 'fi2021',
 			messages: []
 		},
+		{
+			id: 'minecraft',
+			name: 'Minecraft',
+			order: 4,
+			server_id: 'fi2021',
+			messages: []
+		},
+		{
+			id: 'treff2000',
+			name: 'Treff 2000',
+			order: 0,
+			server_id: 'amitdoener',
+			messages: []
+		}
 	]);
 	return {
 		subscribe,
 		set,
-		update,
+		update
 	};
 })();

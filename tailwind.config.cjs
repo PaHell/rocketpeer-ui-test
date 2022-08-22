@@ -69,7 +69,7 @@ module.exports = {
 			button: {
 				normal: '#45545c',
 				hover: '#686d73',
-				active: '#72767d',
+				active: '#72767d'
 			}
 		}),
 		columns: {

@@ -12,7 +12,7 @@
 		{
 			text: 'All',
 			path: '/home/known/all'
-		},
+		}
 	];
 	let active: number = -1;
 </script>

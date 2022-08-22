@@ -4,7 +4,7 @@
 	import Icon from '@src/components/Icon.svelte';
 	import type NavMatch from '@src/navMatch';
 	import type { App } from '@src/app';
-	import NavLink from "./NavLink.svelte";
+	import NavLink from './NavLink.svelte';
 </script>
 
 <script lang="ts">
