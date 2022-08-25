@@ -9,12 +9,14 @@
 	import UserImage from '@src/components/UserImage.svelte';
 	import { users } from '@src/store';
 	import { goto } from '$app/navigation';
+import Modal from '@src/components/Modal.svelte';
+import NavLink from '@src/components/NavLink.svelte';
 </script>
 
 <script lang="ts">
-	import NavLink from '@src/components/NavLink.svelte';
-
 	let search: string = '';
+	let searchOpened = false;
+	let newMessageOpened = false;
 	let top: App.UI.NavBarItem[] = [
 		{
 			icon: Icons.FRIEND,
@@ -32,16 +34,22 @@
 </script>
 
 <template>
+	<Modal bind:opened={searchOpened}>
+		<p>Search</p>
+	</Modal>
+	<Modal bind:opened={newMessageOpened}>
+		<p>New Message</p>
+	</Modal>
 	<MainLayout>
 		<header class="sidebar">
-			<Button css="messages-search" on:click={() => {}} text="Search in messages" />
+			<Button css="messages-search" on:click={() => searchOpened = true} text="Search in messages" />
 		</header>
 		<aside>
 			<NavBar items={top} css="p-2" vertical />
 			<div class="dm-list">
 				<header>
 					<p>Direct Messages</p>
-					<Button on:click={() => {}} icon={Icons.ADD} />
+					<Button on:click={() => newMessageOpened = true} icon={Icons.ADD} />
 				</header>
 				<ul class="list">
 					{#each $users as user}

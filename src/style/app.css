@@ -21,6 +21,9 @@ h2 {
 }
 p {
 	@apply text-base;
+	&:not(.multiline) {
+		@apply text-ellipsis whitespace-nowrap overflow-hidden;
+	}
 }
 
 /* INPUT */
@@ -33,7 +36,8 @@ textarea {
 
 /* List */
 
-.list > * {
+.list > a,
+.list > button {
 	@apply w-full flex
     bg-gray-600 rounded;
 	&:hover {

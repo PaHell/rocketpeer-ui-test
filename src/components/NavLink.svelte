@@ -35,6 +35,7 @@
 	interface $$Events {
 		click: MouseEvent;
 	}
+	export let css = '';
 	export let path = '/';
 	export let match: NavMatch = NavMatch.ALL;
 	let active = false;
@@ -61,7 +62,7 @@
 </script>
 
 <template>
-	<button class:active on:click|preventDefault={(e) => onClick(e)}>
+	<button class={css} class:active on:click|preventDefault={(e) => onClick(e)}>
 		<slot {active} />
 	</button>
 </template>

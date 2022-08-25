@@ -59,7 +59,7 @@ export const servers = (() => {
 		{
 			id: 'amitdoener',
 			name: "Amit's Dönerbude",
-			img: ''
+			img: '',
 		},
 		{
 			id: 'fi2021',
@@ -98,43 +98,50 @@ export const servers = (() => {
 		}
 	};
 })();
+export const connectedVoiceChannel = writable<string | undefined>();
 export const voiceChannels = (() => {
 	const { subscribe, update, set } = writable<App.VoiceChannel[]>([
 		{
 			id: 'fullmuteafkgesocks',
 			name: 'FullMute & AFK Gesocks',
 			order: 1,
-			server_id: 'hellebrand2021'
+			server_id: 'hellebrand2021',
+			connectedUsers: []
 		},
 		{
 			id: 'diegruppe',
 			name: 'Die Gruppe',
 			order: 2,
-			server_id: 'hellebrand2021'
+			server_id: 'hellebrand2021',
+			connectedUsers: []
 		},
 		{
 			id: 'cafe',
 			name: 'Cafe',
 			order: 3,
-			server_id: 'hellebrand2021'
+			server_id: 'hellebrand2021',
+			connectedUsers: []
 		},
 		{
 			id: 'bielefeld',
 			name: 'Bielefeld',
 			order: 4,
-			server_id: 'hellebrand2021'
+			server_id: 'hellebrand2021',
+			connectedUsers: []
 		},
 		{
 			id: 'lounge',
 			name: 'Lounge',
 			order: 1,
-			server_id: 'fi2021'
+			server_id: 'fi2021',
+			connectedUsers: []
 		},
 		{
 			id: 'berufsschule',
 			name: 'Berufsschule',
 			order: 2,
-			server_id: 'fi2021'
+			server_id: 'fi2021',
+			connectedUsers: []
 		}
 	]);
 	return {

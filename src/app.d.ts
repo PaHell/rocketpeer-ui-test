@@ -20,8 +20,6 @@ declare namespace App {
 		id: string;
 		name: string;
 		img?: string;
-		textChannels: TextChannel[];
-		voiceChannels: VoiceChannel[];
 	};
 	type TextChannel = {
 		id: string;
@@ -35,6 +33,7 @@ declare namespace App {
 		name: string;
 		order: number;
 		server_id: string;
+		connectedUsers: User[];
 	};
 	namespace UI {
 		type NavBarItem = {
